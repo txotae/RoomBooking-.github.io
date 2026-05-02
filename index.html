@@ -73,6 +73,16 @@
     button:hover {
       background: #007bff;
     }
+
+    /* 🔥 เพิ่มส่วนนี้ */
+    .time-note {
+      display: block;
+      color: #888;
+      font-size: 12px;
+      margin-top: -5px;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
   </style>
 </head>
 
@@ -106,6 +116,12 @@
       <option value="Morning">Morning</option>
       <option value="Afternoon">Afternoon</option>
     </select>
+
+    <!-- 🔥 เพิ่มข้อความตรงนี้ -->
+    <small class="time-note">
+      ช่วงเช้า (09.00 - 12.00)<br>
+      ช่วงบ่าย (13.00 - 16.00)
+    </small>
 
     <label>เลือกห้อง</label>
     <select name="room" required>
