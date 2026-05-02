@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: url("bg.jpg") no-repeat center center/cover;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -15,8 +15,7 @@
     }
 
     .container {
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.95);
       padding: 30px;
       border-radius: 16px;
       width: 330px;
@@ -24,7 +23,7 @@
     }
 
     .logo {
-      width: 70px;
+      width: 80px;
       display: block;
       margin: auto;
       margin-bottom: 10px;
@@ -56,14 +55,14 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border: 1px solid #003366;
+      border: 1px solid #4facfe;
       outline: none;
     }
 
     button {
       width: 100%;
       padding: 12px;
-      background: #003366;
+      background: #4facfe;
       color: white;
       border: none;
       border-radius: 8px;
@@ -72,7 +71,7 @@
     }
 
     button:hover {
-      background: #0055aa;
+      background: #007bff;
     }
   </style>
 </head>
@@ -81,7 +80,8 @@
 
 <div class="container">
 
-  <img src="logo.png" class="logo">
+  <!-- 🔥 โลโก้ -->
+  <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
 
   <h2>KKUIC Room Booking</h2>
   <p>Book your room easily in seconds</p>
@@ -89,10 +89,10 @@
   <form id="form">
 
     <label>ชื่อผู้จอง</label>
-    <input name="name" placeholder="Your Name" required>
+    <input name="name" required>
 
     <label>Email</label>
-    <input type="email" name="email" placeholder="Email" required>
+    <input type="email" name="email" required>
 
     <label>สาขา</label>
     <input name="major" placeholder="เช่น International Business" required>
@@ -110,14 +110,14 @@
     <label>เลือกห้อง</label>
     <select name="room" required>
       <option value="">-- Select Room --</option>
-      <option value="Studio (5th Floor)">Studio (5th Floor)</option>
-      <option value="Student Lounge (2nd Floor)">Student Lounge (2nd Floor)</option>
-      <option value="M301">M301</option>
-      <option value="MacBook Room">MacBook Room</option>
+      <option>Studio (5th Floor)</option>
+      <option>Student Lounge (2nd Floor)</option>
+      <option>M301</option>
+      <option>MacBook Room</option>
     </select>
 
     <label>หมายเหตุ</label>
-    <textarea name="note" placeholder="Optional"></textarea>
+    <textarea name="note"></textarea>
 
     <button type="submit">Book</button>
 
