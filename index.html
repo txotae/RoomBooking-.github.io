@@ -2,26 +2,45 @@
 <html>
 
 <head>
-  <title>Room Booking</title>
+  <h2>KKUIC Room Booking</h2>
+<p style="text-align:center; color:gray;">
+  Book your room easily in seconds
+</p>
 
-  <style>
-    body {
-      font-family: Arial;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+ <style>
+  body {
+    font-family: Arial;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      width: 320px;
-    }
-  </style>
+  .container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 320px;
+  }
 
+  label {
+    font-weight: bold;
+  }
+
+  input, select, textarea {
+    transition: 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border: 1px solid #4facfe;
+    outline: none;
+  }
+
+  button {
+    font-weight: bold;
+  }
+</style>
 </head>
 
 <body>
@@ -55,6 +74,8 @@
   <option value="MacBook Room">MacBook Room</option>
 </select>
 
+<br>
+  
   <label>หมายเหตุ</label><br>
   <textarea name="note"></textarea><br><br>
 
@@ -75,7 +96,7 @@ document.getElementById("form").onsubmit = async (e) => {
   });
 
   const result = await res.json();
-  alert(result.message);
+  window.location.href = "success.html";
 };
 </script>
 
