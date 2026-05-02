@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
+      background: url("bg.jpg") no-repeat center center/cover;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -15,54 +15,64 @@
     }
 
     .container {
-      background: white;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
       padding: 30px;
-      border-radius: 12px;
-      width: 320px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-radius: 16px;
+      width: 330px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .logo {
+      width: 70px;
+      display: block;
+      margin: auto;
+      margin-bottom: 10px;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 10px;
+      color: #003366;
+      margin-bottom: 5px;
     }
 
     p {
       text-align: center;
-      color: gray;
-      font-size: 14px;
+      color: #555;
+      font-size: 13px;
     }
 
     label {
       font-weight: bold;
+      font-size: 14px;
     }
 
     input, select, textarea {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid #ccc;
     }
 
     input:focus, select:focus, textarea:focus {
-      border: 1px solid #4facfe;
+      border: 1px solid #003366;
       outline: none;
     }
 
     button {
       width: 100%;
-      padding: 10px;
-      background: #4facfe;
+      padding: 12px;
+      background: #003366;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
     }
 
     button:hover {
-      background: #007bff;
+      background: #0055aa;
     }
   </style>
 </head>
@@ -70,6 +80,9 @@
 <body>
 
 <div class="container">
+
+  <img src="logo.png" class="logo">
+
   <h2>KKUIC Room Booking</h2>
   <p>Book your room easily in seconds</p>
 
@@ -80,6 +93,9 @@
 
     <label>Email</label>
     <input type="email" name="email" placeholder="Email" required>
+
+    <label>สาขา</label>
+    <input name="major" placeholder="เช่น International Business" required>
 
     <label>วันที่</label>
     <input type="date" name="date" required>
