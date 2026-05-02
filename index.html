@@ -84,19 +84,12 @@
 </form>
 
 <script>
-document.getElementById("form").onsubmit = async (e) => {
+<script>
+document.getElementById("form").onsubmit = (e) => {
   e.preventDefault();
-
-  const data = Object.fromEntries(new FormData(e.target));
-
-  const res = await fetch("PASTE_YOUR_WEBHOOK_URL_HERE", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(data)
-  });
-
-  const result = await res.json();
   window.location.href = "success.html";
+};
+</script>
 };
 </script>
 
