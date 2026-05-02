@@ -1,99 +1,119 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <h2>KKUIC Room Booking</h2>
-<p style="text-align:center; color:gray;">
-  Book your room easily in seconds
-</p>
+  <title>KKUIC Room Booking</title>
 
- <style>
-  body {
-    font-family: Arial;
-    background: linear-gradient(to right, #4facfe, #00f2fe);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-  .container {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 320px;
-  }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
 
-  label {
-    font-weight: bold;
-  }
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-  input, select, textarea {
-    transition: 0.2s;
-  }
+    p {
+      text-align: center;
+      color: gray;
+      font-size: 14px;
+    }
 
-  input:focus, select:focus, textarea:focus {
-    border: 1px solid #4facfe;
-    outline: none;
-  }
+    label {
+      font-weight: bold;
+    }
 
-  button {
-    font-weight: bold;
-  }
-</style>
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border: 1px solid #4facfe;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4facfe;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #007bff;
+    }
+  </style>
 </head>
 
 <body>
+
 <div class="container">
+  <h2>KKUIC Room Booking</h2>
+  <p>Book your room easily in seconds</p>
 
-<h2>KKUIC Room Booking</h2>
+  <form id="form">
 
-<form id="form">
+    <label>ชื่อผู้จอง</label>
+    <input name="name" placeholder="Your Name" required>
 
-  <label>ชื่อผู้จอง</label><br>
-  <input name="name" required><br><br>
+    <label>Email</label>
+    <input type="email" name="email" placeholder="Email" required>
 
-  <label>Email</label><br>
-  <input type="email" name="email" required><br><br>
+    <label>วันที่</label>
+    <input type="date" name="date" required>
 
-  <label>วันที่</label><br>
-  <input type="date" name="date" required><br><br>
+    <label>ช่วงเวลา</label>
+    <select name="time" required>
+      <option value="">Select Time</option>
+      <option value="Morning">Morning</option>
+      <option value="Afternoon">Afternoon</option>
+    </select>
 
-  <label>ช่วงเวลา</label><br>
-  <select name="time" required>
-    <option value="Morning">Morning (09:00–12:00)</option>
-    <option value="Afternoon">Afternoon (13:00–16:00)</option>
-  </select><br><br>
+    <label>เลือกห้อง</label>
+    <select name="room" required>
+      <option value="">-- Select Room --</option>
+      <option value="Studio (5th Floor)">Studio (5th Floor)</option>
+      <option value="Student Lounge (2nd Floor)">Student Lounge (2nd Floor)</option>
+      <option value="M301">M301</option>
+      <option value="MacBook Room">MacBook Room</option>
+    </select>
 
-  <label>เลือกห้อง</label>
-<select name="room" required>
-  <option value="">-- Select Room --</option>
-  <option value="Studio (5th Floor)">Studio (5th Floor)</option>
-  <option value="Student Lounge (2nd Floor)">Student Lounge (2nd Floor)</option>
-  <option value="M301">M301</option>
-  <option value="MacBook Room">MacBook Room</option>
-</select>
+    <label>หมายเหตุ</label>
+    <textarea name="note" placeholder="Optional"></textarea>
 
-<br>
-  
-  <label>หมายเหตุ</label><br>
-  <textarea name="note"></textarea><br><br>
+    <button type="submit">Book</button>
 
-  <button type="submit">Book</button>
-
-</form>
+  </form>
+</div>
 
 <script>
-<script>
-document.getElementById("form").onsubmit = (e) => {
+document.getElementById("form").onsubmit = function(e) {
   e.preventDefault();
   window.location.href = "success.html";
 };
 </script>
-};
-</script>
 
-  </div>
-</body>
 </body>
 </html>
