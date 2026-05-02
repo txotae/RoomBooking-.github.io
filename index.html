@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>KKUIC Room Booking</h2>
+
+<form id="form">
+
+  <label>ชื่อผู้จอง</label><br>
+  <input name="name" required><br><br>
+
+  <label>Email</label><br>
+  <input type="email" name="email" required><br><br>
+
+  <label>วันที่</label><br>
+  <input type="date" name="date" required><br><br>
+
+  <label>ช่วงเวลา</label><br>
+  <select name="time" required>
+    <option value="Morning">Morning (09:00–12:00)</option>
+    <option value="Afternoon">Afternoon (13:00–16:00)</option>
+  </select><br><br>
+
+  <label>ห้อง</label><br>
+  <select name="room">
+    <option value="Room A">Room A</option>
+    <option value="Room B">Room B</option>
+  </select><br><br>
+
+  <label>หมายเหตุ</label><br>
+  <textarea name="note"></textarea><br><br>
+
+  <button type="submit">Book</button>
+
+</form>
+
+<script>
+document.getElementById("form").onsubmit = async (e) => {
+  e.preventDefault();
+
+  const data = Object.fromEntries(new FormData(e.target));
+
+  const res = await fetch("PASTE_YOUR_WEBHOOK_URL_HERE", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  alert(result.message);
+};
+</script>
+
+</body>
+</html>
