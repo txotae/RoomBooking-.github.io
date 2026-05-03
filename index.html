@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KKUIC Room Booking</title>
   <style>
-    /* ธีมเดิมของคุณเป๊ะๆ ไม่เปลี่ยนสักบรรทัด */
+    /* ธีมเดิมเป๊ะ ไม่เปลี่ยนแม้แต่นิดเดียว */
     body { font-family: Arial, sans-serif; background: linear-gradient(to right, #6dd5fa, #2980b9); margin: 0; padding: 0; }
     .container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
     .logo { display: block; margin: 0 auto 15px; width: 120px; }
@@ -65,27 +65,25 @@
       btn.innerText = "กำลังดำเนินการ...";
 
       try {
-        // ส่งข้อมูลไป n8n
+        // --- จุดที่ 1: เปลี่ยน URL เป็น Production URL จาก n8n ของคุณ ---
         const response = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        // อ่านค่า JSON ที่ n8n ตอบกลับมา
+        // --- จุดที่ 2: อ่านคำตอบจริงจาก n8n ---
         const result = await response.json();
 
-        // เช็คคำตอบจาก n8n
+        // เช็คค่า status ที่เราตั้งไว้ใน Respond node ของ n8n
         if (result.status === "success") {
-          // ถ้า n8n ตอบว่า success ให้ไปหน้าติ๊กถูก
-          window.location.href = "success.html";
+          window.location.href = "success.html"; // จองได้ -> ไปหน้าติ๊กถูก
         } else {
-          // ถ้า n8n ตอบว่า error (จองซ้ำ) หรืออื่นๆ ให้ไปหน้ากากบาท
-          window.location.href = "error.html";
+          window.location.href = "error.html";   // จองซ้ำ/ผิดพลาด -> ไปหน้ากากบาท
         }
         
       } catch (err) {
-        // กรณีเชื่อมต่อไม่ได้
+        console.error("Error:", err);
         window.location.href = "error.html";
       }
     });
@@ -93,4 +91,3 @@
 
 </body>
 </html>
-
