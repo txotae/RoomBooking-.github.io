@@ -65,30 +65,27 @@
       btn.innerText = "กำลังดำเนินการ...";
 
       try {
-        // --- ส่วนที่แก้ไข: เปลี่ยนมาเช็คคำตอบจาก n8n แทนการเด้งไป success ทันที ---
+        // ส่งข้อมูลไป n8n
         const response = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        // รอรับค่า JSON จาก n8n (ที่เราตั้งว่า status: success หรือ error)
+        // อ่านค่า JSON ที่ n8n ตอบกลับมา
         const result = await response.json();
 
+        // เช็คคำตอบจาก n8n
         if (result.status === "success") {
-          // ถ้าจองได้จริง (isBooked = false) ไปหน้าติ๊กถูก
+          // ถ้า n8n ตอบว่า success ให้ไปหน้าติ๊กถูก
           window.location.href = "success.html";
-        } else if (result.status === "error") {
-          // ถ้าจองไม่ได้/จองซ้ำ (isBooked = true) ไปหน้ากากบาท
-          window.location.href = "error.html";
         } else {
-          // เผื่อไว้กรณีอื่น ให้ไปหน้า error
+          // ถ้า n8n ตอบว่า error (จองซ้ำ) หรืออื่นๆ ให้ไปหน้ากากบาท
           window.location.href = "error.html";
         }
         
       } catch (err) {
-        // ถ้าส่งข้อมูลไม่สำเร็จ หรือ n8n มีปัญหา
-        console.error("Error:", err);
+        // กรณีเชื่อมต่อไม่ได้
         window.location.href = "error.html";
       }
     });
@@ -96,3 +93,4 @@
 
 </body>
 </html>
+
