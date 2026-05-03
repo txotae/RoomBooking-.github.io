@@ -148,9 +148,16 @@
           body: formData
         });
 
-       if (res.ok) {
+      try {
+  await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
+    method: "POST",
+    body: formData
+  });
+
+  // 🔥 ไม่รอ response แล้ว
   window.location.href = "success.html";
-} else {
+
+} catch (err) {
   window.location.href = "error.html";
 }
 
