@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Booking Failed</title>
   <style>
-    /* ธีมเดิมเป๊ะ */
+    /* ธีมเดิม */
     body { font-family: Arial, sans-serif; background: linear-gradient(to right, #6dd5fa, #2980b9); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
     
     .card { 
@@ -18,7 +18,7 @@
       width: 90%; 
     }
 
-    /* --- ส่วนวาดกากบาทแดงด้วย CSS (ไม่ง้อรูป) --- */
+    /* --- ส่วนวาดกากบาทด้วย CSS (ไม่ง้อรูป) --- */
     .icon-container {
       width: 80px;
       height: 80px;
@@ -26,13 +26,13 @@
       position: relative;
     }
     
-    .red-x {
+    .x-icon {
       width: 100%;
       height: 100%;
       position: relative;
     }
     
-    .red-x:before, .red-x:after {
+    .x-icon:before, .x-icon:after {
       content: '';
       position: absolute;
       width: 80px; /* ความยาวแขน */
@@ -43,11 +43,11 @@
       left: 0;
     }
     
-    .red-x:before {
+    .x-icon:before {
       transform: rotate(45deg);
     }
     
-    .red-x:after {
+    .x-icon:after {
       transform: rotate(-45deg);
     }
     /* -------------------------------------- */
@@ -73,7 +73,7 @@
 <body>
   <div class="card">
     <div class="icon-container">
-      <div class="red-x"></div>
+      <div class="x-icon"></div>
     </div>
     <h2>จองไม่สำเร็จ!</h2>
     <p>ขออภัยครับ ห้องพักในช่วงเวลาดังกล่าวถูกจองเต็มแล้ว หรือมีข้อผิดพลาดบางอย่าง กรุณาลองใหม่อีกครั้ง</p>
@@ -81,4 +81,3 @@
   </div>
 </body>
 </html>
-
