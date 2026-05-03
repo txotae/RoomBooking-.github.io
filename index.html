@@ -89,7 +89,7 @@
 
     <h2>KKUIC Room Booking</h2>
 
-    <!-- 🔥 แก้เฉพาะตรงนี้ -->
+    <!-- 🔥 แก้เฉพาะ form -->
     <form id="bookingForm">
 
       <label>name</label>
@@ -135,7 +135,7 @@
     </form>
   </div>
 
-  <!-- ✅ เพิ่มแค่นี้ -->
+  <!-- 🔥 เพิ่มเฉพาะ script -->
   <script>
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
       e.preventDefault();
@@ -143,7 +143,7 @@
       const formData = new FormData(this);
 
       try {
-        const res = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
+        const res = await fetch("https://txotae.app.n8n.cloud/webhook-test/BookingRoom", {
           method: "POST",
           body: formData
         });
@@ -151,13 +151,13 @@
         const data = await res.json();
 
         if (data.status === "error") {
-          window.location.href = "error.html";
+          window.location.href = "/RoomBooking-_github.io/error.html";
         } else {
-          window.location.href = "success.html";
+          window.location.href = "/RoomBooking-_github.io/success.html";
         }
 
       } catch (err) {
-        window.location.href = "error.html";
+        window.location.href = "/RoomBooking-_github.io/error.html";
       }
     });
   </script>
