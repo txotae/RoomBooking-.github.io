@@ -79,25 +79,6 @@
     button:hover {
       background: #1d4ed8;
     }
-
-    .result {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 12px;
-      display: none;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .success {
-      background: #d1fae5;
-      color: #065f46;
-    }
-
-    .error {
-      background: #fee2e2;
-      color: #991b1b;
-    }
   </style>
 </head>
 
@@ -108,8 +89,8 @@
 
     <h2>KKUIC Room Booking</h2>
 
-    <!-- ✅ เปลี่ยนเป็นใช้ id -->
-    <form id="bookingForm">
+    <!-- 🔥 เชื่อมกับ n8n -->
+    <form action="https://txotae.app.n8n.cloud/webhook-test/BookingRoom" method="POST">
 
       <label>name</label>
       <input type="text" name="name" required>
@@ -147,56 +128,13 @@
       <label>note</label>
       <textarea name="note"></textarea>
 
+      <!-- ✅ status ซ่อน -->
       <input type="hidden" name="status" value="Pending">
 
       <button type="submit">Book</button>
+
     </form>
-
-    <!-- ✅ กล่องแสดงผล -->
-    <div id="resultBox" class="result"></div>
-
   </div>
-
-  <!-- 🔥 SCRIPT สำคัญ -->
-  <script>
-    const form = document.getElementById("bookingForm");
-    const resultBox = document.getElementById("resultBox");
-
-    form.addEventListener("submit", async function(e) {
-      e.preventDefault();
-
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-
-      try {
-        const res = await fetch("https://txotae.app.n8n.cloud/webhook-test/BookingRoom", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        });
-
-        const result = await res.json();
-
-        resultBox.style.display = "block";
-
-        if (result.status === "success") {
-          resultBox.className = "result success";
-          resultBox.innerHTML = "✅ " + result.message;
-          form.reset();
-        } else {
-          resultBox.className = "result error";
-          resultBox.innerHTML = "❌ " + result.message;
-        }
-
-      } catch (err) {
-        resultBox.style.display = "block";
-        resultBox.className = "result error";
-        resultBox.innerHTML = "❌ เกิดข้อผิดพลาด";
-      }
-    });
-  </script>
 
 </body>
 </html>
