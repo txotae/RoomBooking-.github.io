@@ -140,7 +140,14 @@
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
       e.preventDefault();
 
-     
+      const formData = new FormData(this);
+
+      try {
+        const res = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
+          method: "POST",
+          body: formData
+        });
+
       try {
  try {
   const res = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
@@ -148,13 +155,12 @@
     body: formData
   });
 
-const data = await res.json();  // ⭐ เพิ่ม
-
-if (data.status === "success") {
-  window.location.href = "success.html?message=" + encodeURIComponent(data.message);
-} else {
-  window.location.href = "error.html?message=" + encodeURIComponent(data.message);
-}
+  if (res.ok) {
+    localStorage.setItem("bookingStatus", "success");
+    window.location.href = "success.html";
+  } else {
+    localStorage.setItem("bookingStatus", "error");
+    window.location.href = "success.html";
   }
 
 } catch (err) {
