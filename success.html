@@ -14,52 +14,59 @@
     }
 
     .container {
-      max-width: 500px;
-      margin: 40px auto;
+      max-width: 400px;
+      margin: 80px auto;
       background: white;
       padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
       text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     }
 
     .logo {
-      display: block;
-      margin: 0 auto 15px;
-      width: 120px;
+      width: 100px;
+      margin-bottom: 15px;
+    }
+
+    /* 🔄 วงกลมโหลด */
+    .loader {
+      border: 6px solid #eee;
+      border-top: 6px solid #2563eb;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     h2 {
       color: #1e3a8a;
-      margin-bottom: 20px;
-    }
-
-    .icon {
-      font-size: 80px;
-      margin-bottom: 20px;
+      margin-top: 10px;
     }
 
     .success {
+      font-size: 60px;
       color: green;
     }
 
     .error {
+      font-size: 60px;
       color: red;
-    }
-
-    .message {
-      font-size: 16px;
-      margin-bottom: 20px;
     }
 
     button {
       width: 100%;
       background: #2563eb;
       color: white;
-      padding: 14px;
+      padding: 12px;
       border: none;
-      border-radius: 12px;
-      font-size: 16px;
+      border-radius: 10px;
+      margin-top: 20px;
       cursor: pointer;
     }
 
@@ -74,31 +81,43 @@
   <div class="container">
     <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
 
-    <div id="icon" class="icon">⏳</div>
-    <h2 id="title">กำลังโหลด...</h2>
-    <div id="message" class="message"></div>
+    <!-- 🔄 ตอนแรก -->
+    <div id="loading">
+      <div class="loader"></div>
+      <h2>กำลังตรวจสอบ...</h2>
+    </div>
 
-    <button onclick="window.location.href='index.html'">
-      กลับไปจองใหม่
-    </button>
+    <!-- ✅ success -->
+    <div id="success" style="display:none;">
+      <div class="success">✔</div>
+      <h2>จองสำเร็จ</h2>
+    </div>
+
+    <!-- ❌ error -->
+    <div id="error" style="display:none;">
+      <div class="error">✖</div>
+      <h2>จองไม่สำเร็จ</h2>
+    </div>
+
+    <button onclick="window.location.href='index.html'">กลับไปจองใหม่</button>
   </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
+    // จำค่าจากหน้า index
+    const result = localStorage.getItem("bookingStatus");
 
-    const status = params.get("status");
-    const message = params.get("message");
+    setTimeout(() => {
+      document.getElementById("loading").style.display = "none";
 
-    const icon = document.getElementById("icon");
-    const title = document.getElementById("title");
-    const msg = document.getElementById("message");
+      if (result === "success") {
+        document.getElementById("success").style.display = "block";
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
 
-    if (status === "success") {
-      icon.innerHTML = "✔️";
-      icon.classList.add("success");
-      title.innerText = "จองสำเร็จ";
-   
-    msg.innerText = message;
+      // ล้างค่า
+      localStorage.removeItem("bookingStatus");
+    }, 1500);
   </script>
 
 </body>
