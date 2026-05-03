@@ -90,19 +90,19 @@
 
     <form action="https://txotae.app.n8n.cloud/webhook-test/BookingRoom" method="POST">
 
-      <label>ชื่อผู้จอง</label>
+      <label>name</label>
       <input type="text" name="name" required>
 
       <label>Email</label>
       <input type="email" name="email" required>
 
-      <label>สาขา</label>
+      <label>major</label>
       <input type="text" name="major" placeholder="CREATIVE MEDIA TECHNOLOGY (or CMT)" required>
 
-      <label>วันที่ต้องการจอง</label>
+      <label>date</label>
       <input type="date" name="date" required>
 
-      <label>ช่วงเวลาที่ต้องการจอง</label>
+      <label>time</label>
       <select name="time" required>
         <option value="">-- กรุณาเลือกช่วงเวลา --</option>
         <option value="Morning">Morning</option>
@@ -114,7 +114,7 @@
         ช่วงบ่าย (13.00-16.00)
       </small>
 
-      <label>ห้องที่ต้องการจอง</label>
+      <label>room</label>
       <select name="room" required>
         <option value="">-- กรุณาเลือกห้อง --</option>
         <option value="Studio (5 floor)">Studio (5 floor)</option>
@@ -123,7 +123,7 @@
         <option value="MacBook Room">MacBook Room</option>
       </select>
 
-      <label>หมายเหตุ</label>
+      <label>note</label>
       <textarea name="note" placeholder="กรอกเพิ่มเติม (ถ้ามี)"></textarea>
 
       <!-- hidden status -->
