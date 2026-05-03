@@ -89,7 +89,7 @@
 
     <h2>KKUIC Room Booking</h2>
 
-    <!-- 🔥 แก้เฉพาะ form -->
+    <!-- 🔥 ใช้ id แทน action -->
     <form id="bookingForm">
 
       <label>name</label>
@@ -135,7 +135,7 @@
     </form>
   </div>
 
-  <!-- 🔥 เพิ่มเฉพาะ script -->
+  <!-- 🔥 เพิ่ม logic + แก้ redirect -->
   <script>
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
       e.preventDefault();
@@ -150,14 +150,15 @@
 
         const data = await res.json();
 
-        if (data.status === "error") {
-          window.location.href = "/RoomBooking-_github.io/error.html";
+        // 🔥 เช็คให้ชัวร์
+        if (data.status && data.status.toLowerCase() === "success") {
+          window.location.href = "success.html";
         } else {
-          window.location.href = "/RoomBooking-_github.io/success.html";
+          window.location.href = "error.html";
         }
 
       } catch (err) {
-        window.location.href = "/RoomBooking-_github.io/error.html";
+        window.location.href = "error.html";
       }
     });
   </script>
