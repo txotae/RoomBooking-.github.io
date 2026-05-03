@@ -148,13 +148,11 @@
           body: formData
         });
 
-        const data = await res.json();
-
-        if (data.status && data.status.toLowerCase() === "success") {
-          window.location.href = "success.html";
-        } else {
-          window.location.href = "error.html";
-        }
+       if (res.ok) {
+  window.location.href = "success.html";
+} else {
+  window.location.href = "error.html";
+}
 
       } catch (err) {
         window.location.href = "error.html";
