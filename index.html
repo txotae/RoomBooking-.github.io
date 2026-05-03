@@ -90,7 +90,7 @@
     <h2>KKUIC Room Booking</h2>
 
     <!-- 🔥 เชื่อมกับ n8n -->
-    <form action="<form id="bookingForm">" 
+    <form id="bookingForm"> 
 
       <label>name</label>
       <input type="text" name="name" required>
@@ -135,6 +135,31 @@
 
     </form>
   </div>
+  </div>
 
+  <!-- 🔥 ใส่ตรงนี้ -->
+  <script>
+  document.getElementById("bookingForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    const response = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.status === "success") {
+      window.location.href = "success.html";
+    } else {
+      window.location.href = "error.html";
+    }
+  });
+  </script>
+
+</body>
+</html>
 </body>
 </html>
