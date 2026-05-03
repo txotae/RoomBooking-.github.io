@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking Result</title>
-
+  <title>Booking Success</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,7 +11,6 @@
       margin: 0;
       padding: 0;
     }
-
     .container {
       max-width: 400px;
       margin: 80px auto;
@@ -22,13 +20,10 @@
       text-align: center;
       box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     }
-
     .logo {
       width: 100px;
       margin-bottom: 15px;
     }
-
-    /* 🔄 วงกลมโหลด */
     .loader {
       border: 6px solid #eee;
       border-top: 6px solid #2563eb;
@@ -38,27 +33,22 @@
       animation: spin 1s linear infinite;
       margin: 20px auto;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
     h2 {
       color: #1e3a8a;
       margin-top: 10px;
     }
-
-    .success {
+    .success-icon {
       font-size: 60px;
       color: green;
     }
-
-    .error {
+    .error-icon {
       font-size: 60px;
       color: red;
     }
-
     button {
       width: 100%;
       background: #2563eb;
@@ -69,65 +59,54 @@
       margin-top: 20px;
       cursor: pointer;
     }
-
     button:hover {
       background: #1d4ed8;
     }
   </style>
 </head>
-
 <body>
 
   <div class="container">
     <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
 
-    <!-- 🔄 ตอนแรก -->
     <div id="loading">
       <div class="loader"></div>
       <h2>กำลังตรวจสอบ...</h2>
     </div>
 
-    <!-- ✅ success -->
-    <div id="success" style="display:none;">
-      <div class="success">✔</div>
+    <div id="success-content" style="display:none;">
+      <div class="success-icon">✔</div>
       <h2>จองสำเร็จ</h2>
+      <p style="color: gray;">ระบบบันทึกข้อมูลการจองเรียบร้อยแล้ว</p>
     </div>
 
-    <!-- ❌ error -->
-    <div id="error" style="display:none;">
-      <div class="error">✖</div>
+    <div id="error-content" style="display:none;">
+      <div class="error-icon">✖</div>
       <h2>จองไม่สำเร็จ</h2>
+      <p style="color: gray;">ขออภัย ห้องนี้ถูกจองในช่วงเวลาดังกล่าวแล้ว</p>
     </div>
 
-    <button onclick="window.location.href='index.html'">กลับไปจองใหม่</button>
+    <button onclick="window.location.href='index.html'">กลับไปหน้าหลัก</button>
   </div>
 
   <script>
-    // จำค่าจากหน้า index
-    const result = localStorage.getItem("bookingStatus");
-
+    // รอ 1.5 วินาทีเพื่อให้ดูเหมือนว่ากำลังตรวจสอบจริงๆ (ตามดีไซน์ที่คุณชอบ)
     setTimeout(() => {
       document.getElementById("loading").style.display = "none";
+      
+      // ดึงค่าที่หน้า index ฝากไว้มาดู
+      const status = localStorage.getItem("bookingStatus");
 
-      if (result === "success") {
-        document.getElementById("success").style.display = "block";
+      if (status === "success") {
+        document.getElementById("success-content").style.display = "block";
       } else {
-        document.getElementById("error").style.display = "block";
+        document.getElementById("error-content").style.display = "block";
       }
 
-      // ล้างค่า
+      // ล้างค่าทิ้งเพื่อความสะอาด
       localStorage.removeItem("bookingStatus");
     }, 1500);
   </script>
-
-<script>
-const params = new URLSearchParams(window.location.search);
-const message = params.get("message");
-
-if (message) {
-  document.getElementById("message").innerText = message;
-}
-</script>
   
 </body>
 </html>
