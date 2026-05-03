@@ -1,151 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
+  <meta charset="UTF-8">
   <title>KKUIC Room Booking</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background: linear-gradient(to right, #6dd5fa, #2980b9);
       margin: 0;
+      padding: 0;
     }
 
     .container {
-      background: rgba(255,255,255,0.95);
-      padding: 30px;
-      border-radius: 16px;
-      width: 330px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .logo {
-      width: 80px;
-      display: block;
-      margin: auto;
-      margin-bottom: 10px;
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
     h2 {
       text-align: center;
-      color: #003366;
-      margin-bottom: 5px;
-    }
-
-    p {
-      text-align: center;
-      color: #555;
-      font-size: 13px;
+      margin-bottom: 20px;
     }
 
     label {
       font-weight: bold;
-      font-size: 14px;
     }
 
     input, select, textarea {
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
+      margin-top: 5px;
+      margin-bottom: 15px;
       border-radius: 8px;
       border: 1px solid #ccc;
     }
 
-    input:focus, select:focus, textarea:focus {
-      border: 1px solid #4facfe;
-      outline: none;
+    small {
+      color: gray;
+      display: block;
+      margin-top: -10px;
+      margin-bottom: 10px;
     }
 
     button {
       width: 100%;
       padding: 12px;
-      background: #4facfe;
+      background: #2980b9;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      font-size: 16px;
       cursor: pointer;
-      font-weight: bold;
     }
 
     button:hover {
-      background: #007bff;
+      background: #1f5f8b;
     }
 
-    /* 🔥 เพิ่มส่วนนี้ */
-    .time-note {
+    .logo {
       display: block;
-      color: #888;
-      font-size: 12px;
-      margin-top: -5px;
-      margin-bottom: 10px;
-      line-height: 1.4;
+      margin: 0 auto 15px;
+      width: 120px;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <!-- 🔥 โลโก้ -->
-  <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
+    <!-- โลโก้ -->
+    <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
 
-  <h2>KKUIC Room Booking</h2>
-  <p>Book your room easily in seconds</p>
+    <h2>Room Booking (KKUIC)</h2>
 
-  <form id="form">
+    <!-- 🔥 FORM ที่เชื่อม n8n -->
+    <form action="https://txotae.app.n8n.cloud/webhook-test/BookingRoom" method="POST">
 
-    <label>ชื่อผู้จอง</label>
-    <input name="name" required>
+      <label>ชื่อผู้จอง</label>
+      <input type="text" name="name" required>
 
-    <label>Email</label>
-    <input type="email" name="email" required>
+      <label>Email</label>
+      <input type="email" name="email" required>
 
-    <label>สาขา</label>
-    <input name="major" placeholder="CREATIVE MEDIA TECHNOLOGY (or CMT)" required>
+      <label>สาขา</label>
+      <input type="text" name="major" placeholder="CREATIVE MEDIA TECHNOLOGY (or CMT)" required>
 
-    <label>วันที่</label>
-    <input type="date" name="date" required>
+      <label>วันที่</label>
+      <input type="date" name="date" required>
 
-    <label>ช่วงเวลา</label>
-    <select name="time" required>
-      <option value="">Select Time</option>
-      <option value="Morning">Morning</option>
-      <option value="Afternoon">Afternoon</option>
-    </select>
+      <label>ช่วงเวลา</label>
+      <select name="time" required>
+        <option value="">-- เลือกช่วงเวลา --</option>
+        <option value="Morning">Morning</option>
+        <option value="Afternoon">Afternoon</option>
+      </select>
 
-    <!-- 🔥 เพิ่มข้อความตรงนี้ -->
-    <small class="time-note">
-      ช่วงเช้า (09.00 - 12.00)<br>
-      ช่วงบ่าย (13.00 - 16.00)
-    </small>
+      <small>
+        ช่วงเช้า (09.00-12.00)<br>
+        ช่วงบ่าย (13.00-16.00)
+      </small>
 
-    <label>เลือกห้อง</label>
-    <select name="room" required>
-      <option value="">-- Select Room --</option>
-      <option>Studio (5th Floor)</option>
-      <option>Student Lounge (2nd Floor)</option>
-      <option>M301</option>
-      <option>MacBook Room</option>
-    </select>
+      <label>ห้อง</label>
+      <select name="room" required>
+        <option value="">-- เลือกห้อง --</option>
+        <option value="Studio (5 floor)">Studio (5 floor)</option>
+        <option value="Student Lounge (2 floor)">Student Lounge (2 floor)</option>
+        <option value="M301">M301</option>
+        <option value="MacBook Room">MacBook Room</option>
+      </select>
 
-    <label>หมายเหตุ</label>
-    <textarea name="note"></textarea>
+      <label>หมายเหตุ</label>
+      <textarea name="note"></textarea>
 
-    <button type="submit">Book</button>
+      <button type="submit">Book</button>
 
-  </form>
-</div>
+    </form>
 
-<script>
-document.getElementById("form").onsubmit = function(e) {
-  e.preventDefault();
-  window.location.href = "success.html";
-};
-</script>
+  </div>
 
 </body>
 </html>
