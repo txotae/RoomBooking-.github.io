@@ -5,108 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Booking Success</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #6dd5fa, #2980b9);
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 400px;
-      margin: 80px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    }
-    .logo {
-      width: 100px;
-      margin-bottom: 15px;
-    }
-    .loader {
-      border: 6px solid #eee;
-      border-top: 6px solid #2563eb;
-      border-radius: 50%;
-      width: 70px;
-      height: 70px;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    h2 {
-      color: #1e3a8a;
-      margin-top: 10px;
-    }
-    .success-icon {
-      font-size: 60px;
-      color: green;
-    }
-    .error-icon {
-      font-size: 60px;
-      color: red;
-    }
-    button {
-      width: 100%;
-      background: #2563eb;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1d4ed8;
-    }
+    body { font-family: Arial, sans-serif; background: linear-gradient(to right, #6dd5fa, #2980b9); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .card { background: white; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); max-width: 400px; }
+    .icon { color: #22c55e; font-size: 60px; margin-bottom: 20px; }
+    h2 { color: #1e3a8a; }
+    button { background: #2563eb; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; margin-top: 20px; width: 100%; }
   </style>
 </head>
 <body>
-
-  <div class="container">
-    <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
-
-    <div id="loading">
-      <div class="loader"></div>
-      <h2>กำลังตรวจสอบ...</h2>
-    </div>
-
-    <div id="success-content" style="display:none;">
-      <div class="success-icon">✔</div>
-      <h2>จองสำเร็จ</h2>
-      <p style="color: gray;">ระบบบันทึกข้อมูลการจองเรียบร้อยแล้ว</p>
-    </div>
-
-    <div id="error-content" style="display:none;">
-      <div class="error-icon">✖</div>
-      <h2>จองไม่สำเร็จ</h2>
-      <p style="color: gray;">ขออภัย ห้องนี้ถูกจองในช่วงเวลาดังกล่าวแล้ว</p>
-    </div>
-
+  <div class="card">
+    <div class="icon">✔</div>
+    <h2>จองสำเร็จ!</h2>
+    <p>เราได้รับข้อมูลการจองของคุณเรียบร้อยแล้ว</p>
     <button onclick="window.location.href='index.html'">กลับไปหน้าหลัก</button>
   </div>
-
-  <script>
-    // รอ 1.5 วินาทีเพื่อให้ดูเหมือนว่ากำลังตรวจสอบจริงๆ (ตามดีไซน์ที่คุณชอบ)
-    setTimeout(() => {
-      document.getElementById("loading").style.display = "none";
-      
-      // ดึงค่าที่หน้า index ฝากไว้มาดู
-      const status = localStorage.getItem("bookingStatus");
-
-      if (status === "success") {
-        document.getElementById("success-content").style.display = "block";
-      } else {
-        document.getElementById("error-content").style.display = "block";
-      }
-
-      // ล้างค่าทิ้งเพื่อความสะอาด
-      localStorage.removeItem("bookingStatus");
-    }, 1500);
-  </script>
-  
 </body>
 </html>
+
