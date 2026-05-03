@@ -5,18 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Booking Success</title>
   <style>
+    /* ธีมเดิม */
     body { font-family: Arial, sans-serif; background: linear-gradient(to right, #6dd5fa, #2980b9); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-    .card { background: white; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); max-width: 400px; }
-    .icon { color: #22c55e; font-size: 60px; margin-bottom: 20px; }
-    h2 { color: #1e3a8a; }
-    button { background: #2563eb; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; margin-top: 20px; width: 100%; }
+    
+    .card { 
+      background: white; 
+      padding: 40px; 
+      border-radius: 20px; 
+      text-align: center; 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2); 
+      max-width: 400px; 
+      width: 90%; 
+    }
+
+    /* --- ส่วนวาดติ๊กถูกด้วย CSS (ไม่ง้อรูป) --- */
+    .icon-container {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+    
+    .check-icon {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    
+    .check-icon:before, .check-icon:after {
+      content: '';
+      position: absolute;
+      background-color: #22c55e; /* สีเขียว */
+      border-radius: 5px;
+    }
+    
+    /* เส้นสั้น */
+    .check-icon:before {
+      width: 30px;
+      height: 10px;
+      top: 45px;
+      left: 10px;
+      transform: rotate(45deg);
+    }
+    
+    /* เส้นยาว */
+    .check-icon:after {
+      width: 60px;
+      height: 10px;
+      top: 35px;
+      left: 20px;
+      transform: rotate(-45deg);
+    }
+    /* -------------------------------------- */
+
+    h2 { color: #1e3a8a; margin-top: 10px; }
+    p { color: #64748b; font-size: 16px; line-height: 1.6; }
+    
+    button { 
+      background: #2563eb; 
+      color: white; 
+      border: none; 
+      padding: 12px 25px; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      margin-top: 25px; 
+      width: 100%; 
+      font-size: 16px; 
+      transition: 0.3s;
+    }
+    button:hover { background: #1d4ed8; }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="icon">✔</div>
+    <div class="icon-container">
+      <div class="check-icon"></div>
+    </div>
     <h2>จองสำเร็จ!</h2>
-    <p>เราได้รับข้อมูลการจองของคุณเรียบร้อยแล้ว</p>
+    <p>เราได้รับข้อมูลการจองห้องพักของคุณเรียบร้อยแล้ว</p>
     <button onclick="window.location.href='index.html'">กลับไปหน้าหลัก</button>
   </div>
 </body>
