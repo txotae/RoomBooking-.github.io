@@ -137,33 +137,16 @@
 
   <!-- ✅ เพิ่ม script (หัวใจของระบบ) -->
   <script>
-   <script>
-  document.getElementById("bookingForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+    document.getElementById("bookingForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
 
-    const formData = new FormData(this);
+      const formData = new FormData(this);
 
-    try {
-      const res = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
-        method: "POST",
-        body: formData
-      });
-
-      console.log("STATUS:", res.status);
-
-      // 🔥 ใช้อันนี้แทนทุกอย่าง
-      if (res.status === 200) {
-        window.location.href = "success.html";
-      } else {
-        window.location.href = "error.html";
-      }
-
-    } catch (err) {
-      console.log("ERROR:", err);
-      window.location.href = "error.html";
-    }
-  });
-</script>
+      try {
+        const res = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
+          method: "POST",
+          body: formData
+        });
 
        if (res.ok) {
   window.location.href = "success.html";
