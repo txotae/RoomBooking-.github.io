@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KKUIC Room Booking</title>
   <style>
-    /* ธีมเดิมที่คุณใช้ (คงไว้ 100%) */
+    /* ธีมเดิมเป๊ะๆ ตามที่คุณรัก */
     body { font-family: Arial, sans-serif; background: linear-gradient(to right, #6dd5fa, #2980b9); margin: 0; padding: 0; }
     .container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
     .logo { display: block; margin: 0 auto 15px; width: 120px; }
@@ -14,9 +14,9 @@
     input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 14px; }
     textarea { resize: vertical; min-height: 80px; }
     small { color: gray; display: block; margin-top: 5px; margin-bottom: 10px; font-size: 12px; }
-    button { width: 100%; background: #2563eb; color: white; padding: 14px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+    button { width: 100%; background: #2563eb; color: white; padding: 14px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 20px; }
     button:hover { background: #1d4ed8; }
-    button:disabled { background: #94a3b8; cursor: not-allowed; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -25,21 +25,22 @@
     <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
     <h2>KKUIC Room Booking</h2>
     <form id="bookingForm">
-      <label>Name</label>
-      <input type="text" name="name" required placeholder="ชื่อ-นามสกุล">
+      <label>name</label>
+      <input type="text" name="name" required>
       <label>Email</label>
-      <input type="email" name="email" required placeholder="example@kku.ac.th">
-      <label>Major</label>
+      <input type="email" name="email" required>
+      <label>major</label>
       <input type="text" name="major" placeholder="CREATIVE MEDIA TECHNOLOGY (or CMT)" required>
-      <label>Date</label>
-      <input type="date" name="date" id="bookingDate" required>
-      <label>Time</label>
+      <label>date</label>
+      <input type="date" name="date" required>
+      <label>time</label>
       <select name="time" required>
         <option value="">-- เลือกช่วงเวลา --</option>
-        <option value="Morning">Morning (09.00-12.00)</option>
-        <option value="Afternoon">Afternoon (13.00-16.00)</option>
+        <option value="Morning">Morning</option>
+        <option value="Afternoon">Afternoon</option>
       </select>
-      <label>Room</label>
+      <small>ช่วงเช้า (09.00-12.00)<br>ช่วงบ่าย (13.00-16.00)</small>
+      <label>room</label>
       <select name="room" required>
         <option value="">-- เลือกห้อง --</option>
         <option value="Studio (5 floor)">Studio (5 floor)</option>
@@ -47,30 +48,21 @@
         <option value="M301">M301</option>
         <option value="MacBook Room">MacBook Room</option>
       </select>
-      <label>Note</label>
-      <textarea name="note" placeholder="ระบุวัตถุประสงค์การใช้ห้อง..."></textarea>
-      <button type="submit" id="submitBtn">ยืนยันการจอง</button>
+      <label>note</label>
+      <textarea name="note"></textarea>
+      <button type="submit" id="submitBtn">Book Now</button>
     </form>
   </div>
 
   <script>
-    // ป้องกันการเลือกวันที่ย้อนหลัง (ทำให้แข็งแรงขึ้น)
-    const dateInput = document.getElementById('bookingDate');
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.setAttribute('min', today);
-
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
       e.preventDefault();
-      
       const btn = document.getElementById("submitBtn");
-      const originalBtnText = btn.innerText;
-      
-      // ล็อคปุ่มทันทีเพื่อป้องกันการกดเบิ้ล
-      btn.disabled = true;
-      btn.innerText = "⏳ กำลังตรวจสอบสถานะ...";
-
       const formData = new FormData(this);
       const data = Object.fromEntries(formData.entries());
+
+      btn.disabled = true;
+      btn.innerText = "กำลังดำเนินการ...";
 
       try {
         const response = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
@@ -79,27 +71,22 @@
           body: JSON.stringify(data)
         });
 
-        if (!response.ok) throw new Error('Network response was not ok');
-
+        // อ่านคำตอบแบบข้อความ (Text) เพื่อความยืดหยุ่นสูงสุด
         const resultText = await response.text();
-        console.log("n8n Response:", resultText);
+        console.log("n8n ตอบกลับมาว่า:", resultText);
 
-        // เช็คผลลัพธ์แบบยืดหยุ่น (เผื่อ AI ฝั่ง n8n ตอบกลับมาหลายแบบ)
-        const isSuccess = resultText.toLowerCase().includes("success");
-
-        if (isSuccess) {
-          window.location.href = "success.html";
+        // เช็คคำตอบจาก n8n: ถ้ามีคำว่า "success" ให้ไปหน้าสำเร็จ
+        if (resultText.toLowerCase().includes("success")) {
+          window.location.href = "success.html"; // หน้าติ๊กถูก
         } else {
-          // ถ้าไม่ใช่ success (อาจจะเป็น error หรือจองซ้ำ)
-          window.location.href = "error.html";
+          // ถ้าไม่มีคำว่า success ให้ถือว่า Error (เช่น จองซ้ำ)
+          window.location.href = "error.html";   // หน้ากากบาท
         }
         
       } catch (err) {
-        console.error("Fetch error:", err);
-        alert("เกิดข้อผิดพลาดในการเชื่อมต่อระบบ กรุณาลองใหม่อีกครั้ง");
-        // ปลดล็อคปุ่มให้กดใหม่ได้ถ้าเน็ตหลุด
-        btn.disabled = false;
-        btn.innerText = originalBtnText;
+        console.error("เกิดข้อผิดพลาด:", err);
+        // กรณีเชื่อมต่อ n8n ไม่ได้ ให้ไปหน้า Error เพื่อความปลอดภัย
+        window.location.href = "error.html";
       }
     });
   </script>
