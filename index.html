@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KKUIC Room Booking</title>
   <style>
-    /* ธีมเดิมเป๊ะๆ ตามที่คุณรัก */
+    /* ธีมเดิมเป๊ะๆ ตามที่คุณออกแบบไว้ */
     body { font-family: Arial, sans-serif; background: linear-gradient(to right, #6dd5fa, #2980b9); margin: 0; padding: 0; }
     .container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
     .logo { display: block; margin: 0 auto 15px; width: 120px; }
@@ -14,9 +14,9 @@
     input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 14px; }
     textarea { resize: vertical; min-height: 80px; }
     small { color: gray; display: block; margin-top: 5px; margin-bottom: 10px; font-size: 12px; }
-    button { width: 100%; background: #2563eb; color: white; padding: 14px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 20px; }
+    button { width: 100%; background: #2563eb; color: white; padding: 14px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
     button:hover { background: #1d4ed8; }
-    button:disabled { background: #ccc; cursor: not-allowed; }
+    button:disabled { background: #94a3b8; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -25,22 +25,26 @@
     <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
     <h2>KKUIC Room Booking</h2>
     <form id="bookingForm">
-      <label>name</label>
-      <input type="text" name="name" required>
+      <label>Name</label>
+      <input type="text" name="name" required placeholder="ชื่อ-นามสกุล">
+      
       <label>Email</label>
-      <input type="email" name="email" required>
-      <label>major</label>
+      <input type="email" name="email" required placeholder="example@kku.ac.th">
+      
+      <label>Major</label>
       <input type="text" name="major" placeholder="CREATIVE MEDIA TECHNOLOGY (or CMT)" required>
-      <label>date</label>
+      
+      <label>Date</label>
       <input type="date" name="date" required>
-      <label>time</label>
+      
+      <label>Time</label>
       <select name="time" required>
         <option value="">-- เลือกช่วงเวลา --</option>
-        <option value="Morning">Morning</option>
-        <option value="Afternoon">Afternoon</option>
+        <option value="Morning">Morning (09.00-12.00)</option>
+        <option value="Afternoon">Afternoon (13.00-16.00)</option>
       </select>
-      <small>ช่วงเช้า (09.00-12.00)<br>ช่วงบ่าย (13.00-16.00)</small>
-      <label>room</label>
+      
+      <label>Room</label>
       <select name="room" required>
         <option value="">-- เลือกห้อง --</option>
         <option value="Studio (5 floor)">Studio (5 floor)</option>
@@ -48,8 +52,10 @@
         <option value="M301">M301</option>
         <option value="MacBook Room">MacBook Room</option>
       </select>
-      <label>note</label>
-      <textarea name="note"></textarea>
+      
+      <label>Note</label>
+      <textarea name="note" placeholder="วัตถุประสงค์การใช้งาน"></textarea>
+      
       <button type="submit" id="submitBtn">Book Now</button>
     </form>
   </div>
@@ -57,35 +63,43 @@
   <script>
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
       e.preventDefault();
+      
       const btn = document.getElementById("submitBtn");
+      const originalText = btn.innerText;
+      
+      // 1. ล็อคปุ่มป้องกันการกดเบิ้ล
+      btn.disabled = true;
+      btn.innerText = "⏳ กำลังส่งข้อมูล...";
+
       const formData = new FormData(this);
       const data = Object.fromEntries(formData.entries());
 
-      btn.disabled = true;
-      btn.innerText = "กำลังดำเนินการ...";
-
       try {
+        // 2. ส่งข้อมูลไปที่ n8n
         const response = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        // อ่านคำตอบแบบข้อความ (Text) เพื่อความยืดหยุ่นสูงสุด
+        // 3. อ่านคำตอบจาก n8n เป็นข้อความดิบๆ
         const resultText = await response.text();
-        console.log("n8n ตอบกลับมาว่า:", resultText);
+        console.log("n8n Response:", resultText);
 
-        // เช็คคำตอบจาก n8n: ถ้ามีคำว่า "success" ให้ไปหน้าสำเร็จ
-        if (resultText.toLowerCase().includes("success")) {
-          window.location.href = "success.html"; // หน้าติ๊กถูก
+        // 4. เช็คว่าสำเร็จหรือไม่ (ยืดหยุ่นสุดๆ)
+        const isSuccess = resultText.toLowerCase().includes("success");
+
+        if (isSuccess) {
+          // ถ้าสำเร็จ ไปหน้า Success (ติ๊กถูก)
+          window.location.href = "success.html";
         } else {
-          // ถ้าไม่มีคำว่า success ให้ถือว่า Error (เช่น จองซ้ำ)
-          window.location.href = "error.html";   // หน้ากากบาท
+          // ถ้าไม่สำเร็จ หรือจองซ้ำ ไปหน้า Error (กากบาท)
+          window.location.href = "error.html";
         }
         
       } catch (err) {
-        console.error("เกิดข้อผิดพลาด:", err);
-        // กรณีเชื่อมต่อ n8n ไม่ได้ ให้ไปหน้า Error เพื่อความปลอดภัย
+        console.error("Fetch Error:", err);
+        // กรณีเน็ตหลุด ให้ไปหน้าแดงไว้ก่อนเพื่อความปลอดภัย
         window.location.href = "error.html";
       }
     });
