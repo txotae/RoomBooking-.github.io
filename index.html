@@ -4,42 +4,123 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KKUIC Room Booking</title>
+
   <style>
-    body { font-family: Arial, sans-serif; background: linear-gradient(to right, #6dd5fa, #2980b9); margin: 0; padding: 0; }
-    .container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
-    .logo { display: block; margin: 0 auto 15px; width: 120px; }
-    h2 { text-align: center; color: #1e3a8a; margin-bottom: 25px; }
-    label { font-weight: bold; color: #333; display: block; margin-top: 12px; margin-bottom: 5px; }
-    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 14px; }
-    textarea { resize: vertical; min-height: 80px; }
-    small { color: gray; display: block; margin-top: 5px; margin-bottom: 10px; font-size: 12px; }
-    button { width: 100%; background: #2563eb; color: white; padding: 14px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 20px; }
-    button:hover { background: #1d4ed8; }
-    button:disabled { background: #ccc; cursor: not-allowed; }
+    /* กราฟิกและสีเหมือนเดิมทุกประการ */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #6dd5fa, #2980b9);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 15px;
+      width: 120px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1e3a8a;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    small {
+      color: gray;
+      display: block;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    button {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
   </style>
 </head>
+
 <body>
 
   <div class="container">
     <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
+
     <h2>KKUIC Room Booking</h2>
 
     <form id="bookingForm">
+
       <label>name</label>
       <input type="text" name="name" required>
+
       <label>Email</label>
       <input type="email" name="email" required>
+
       <label>major</label>
       <input type="text" name="major" placeholder="CREATIVE MEDIA TECHNOLOGY (or CMT)" required>
+
       <label>date</label>
       <input type="date" name="date" required>
+
       <label>time</label>
       <select name="time" required>
         <option value="">-- เลือกช่วงเวลา --</option>
         <option value="Morning">Morning</option>
         <option value="Afternoon">Afternoon</option>
       </select>
-      <small>ช่วงเช้า (09.00-12.00)<br>ช่วงบ่าย (13.00-16.00)</small>
+
+      <small>
+        ช่วงเช้า (09.00-12.00)<br>
+        ช่วงบ่าย (13.00-16.00)
+      </small>
+
       <label>room</label>
       <select name="room" required>
         <option value="">-- เลือกห้อง --</option>
@@ -48,10 +129,14 @@
         <option value="M301">M301</option>
         <option value="MacBook Room">MacBook Room</option>
       </select>
+
       <label>note</label>
       <textarea name="note"></textarea>
+
       <input type="hidden" name="status" value="Pending">
+
       <button type="submit" id="submitBtn">Book</button>
+
     </form>
   </div>
 
@@ -62,7 +147,7 @@
       const formData = new FormData(this);
 
       btn.disabled = true;
-      btn.innerText = "กำลังตรวจสอบ...";
+      btn.innerText = "Booking...";
 
       try {
         const response = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
@@ -70,15 +155,19 @@
           body: formData
         });
 
-        // รับค่า JSON จาก n8n
-        const data = await response.json();
-
-        // ตรวจสอบ status ที่เราตั้งไว้ใน Node Edit Fields
-        if (data.status === "success") {
-          // ถ้าหลังบ้านส่ง success มา ให้ไปหน้า success.html
-          window.location.href = "success.html";
+        // ตรวจสอบว่า n8n ตอบกลับมาหรือไม่
+        if (response.ok) {
+          const data = await response.json();
+          
+          // เช็คสถานะที่ n8n ส่งมา (ต้องเป็น success ถึงจะไปหน้าสำเร็จ)
+          if (data.status === "success" || data.status === "Success") {
+            window.location.href = "success.html";
+          } else {
+            // ถ้าเป็น error หรือ status อื่นๆ (เช่น ห้องเต็ม) ให้ไปหน้า error
+            window.location.href = "error.html";
+          }
         } else {
-          // ถ้าหลังบ้านส่ง error มา (เพราะจองทับ) ให้ไปหน้า error.html
+          // ถ้า HTTP Status ไม่ใช่ 200 (เช่น n8n พัง)
           window.location.href = "error.html";
         }
 
@@ -91,5 +180,6 @@
       }
     });
   </script>
+
 </body>
 </html>
