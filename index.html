@@ -141,25 +141,28 @@
       e.preventDefault();
 
      
-      try {
- try {
+   try {
   const res = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
     method: "POST",
     body: formData
   });
 
-const data = await res.json();  // ⭐ เพิ่ม
+  let data;
 
-if (data.status === "success") {
-  window.location.href = "success.html?message=" + encodeURIComponent(data.message);
-} else {
-  window.location.href = "error.html?message=" + encodeURIComponent(data.message);
-}
+  try {
+    data = await res.json();
+  } catch {
+    data = { status: "error", message: "Server ไม่ตอบ JSON" };
+  }
+
+  if (res.ok && data.status === "success") {
+    window.location.href = "success.html?message=" + encodeURIComponent(data.message);
+  } else {
+    window.location.href = "error.html?message=" + encodeURIComponent(data.message);
   }
 
 } catch (err) {
-  localStorage.setItem("bookingStatus", "error");
-  window.location.href = "success.html";
+  window.location.href = "error.html?message=เกิดข้อผิดพลาด";
 }
   // 🔥 ไม่รอ response แล้ว
   window.location.href = "success.html";
