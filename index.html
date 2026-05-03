@@ -79,6 +79,11 @@
     button:hover {
       background: #1d4ed8;
     }
+
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 
@@ -89,7 +94,6 @@
 
     <h2>KKUIC Room Booking</h2>
 
-    <!-- ✅ แก้ form ให้ถูก -->
     <form id="bookingForm">
 
       <label>name</label>
@@ -130,49 +134,51 @@
 
       <input type="hidden" name="status" value="Pending">
 
-      <button type="submit">Book</button>
+      <button type="submit" id="submitBtn">Book</button>
 
     </form>
   </div>
 
-  <!-- ✅ เพิ่ม script (หัวใจของระบบ) -->
   <script>
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
       e.preventDefault();
 
-     
-   try {
-  const res = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
-    method: "POST",
-    body: formData
-  });
+      const form = e.target;
+      const formData = new FormData(form);
+      const submitBtn = document.getElementById("submitBtn");
 
-  let data;
+      // เปลี่ยนสถานะปุ่มเพื่อไม่ให้กดซ้ำระหว่างรอ
+      submitBtn.innerText = "Processing...";
+      submitBtn.disabled = true;
 
-  try {
-    data = await res.json();
-  } catch {
-    data = { status: "error", message: "Server ไม่ตอบ JSON" };
-  }
+      try {
+        const res = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
+          method: "POST",
+          body: formData
+        });
 
-  if (res.ok && data.status === "success") {
-    window.location.href = "success.html?message=" + encodeURIComponent(data.message);
-  } else {
-    window.location.href = "error.html?message=" + encodeURIComponent(data.message);
-  }
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
 
-} catch (err) {
-  window.location.href = "error.html?message=เกิดข้อผิดพลาด";
-}
-  // 🔥 ไม่รอ response แล้ว
-  window.location.href = "success.html";
+        const data = await res.json();
 
-} catch (err) {
-  window.location.href = "error.html";
-}
+        // ตรวจสอบเงื่อนไขจาก n8n: 
+        // n8n ต้องส่งสถานะกลับมา เช่น { "status": "success" } หรือ { "status": "error" }
+        if (data.status === "success") {
+          window.location.href = "success.html?message=" + encodeURIComponent(data.message || "จองสำเร็จ");
+        } else {
+          // ถ้าหลังบ้านบอกว่าจองไม่ได้ (เช่น ห้องทับกัน) ให้ไปหน้า error
+          window.location.href = "error.html?message=" + encodeURIComponent(data.message || "ห้องถูกจองแล้ว");
+        }
 
       } catch (err) {
-        window.location.href = "error.html";
+        console.error("Error:", err);
+        window.location.href = "error.html?message=" + encodeURIComponent("เกิดข้อผิดพลาดในการเชื่อมต่อ");
+      } finally {
+        // คืนค่าปุ่มหากเกิดข้อผิดพลาดและยังอยู่ที่เดิม
+        submitBtn.innerText = "Book";
+        submitBtn.disabled = false;
       }
     });
   </script>
