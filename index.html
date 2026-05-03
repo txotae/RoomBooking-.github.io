@@ -6,7 +6,6 @@
   <title>KKUIC Room Booking</title>
 
   <style>
-    /* กราฟิกและสีเหมือนเดิมทุกประการ */
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(to right, #6dd5fa, #2980b9);
@@ -147,7 +146,7 @@
       const formData = new FormData(this);
 
       btn.disabled = true;
-      btn.innerText = "Booking...";
+      btn.innerText = "กำลังดำเนินการ...";
 
       try {
         const response = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
@@ -155,24 +154,24 @@
           body: formData
         });
 
-        // ตรวจสอบว่า n8n ตอบกลับมาหรือไม่
+        // ตรวจสอบว่า n8n ตอบกลับสำเร็จ (HTTP 200-299)
         if (response.ok) {
           const data = await response.json();
           
-          // เช็คสถานะที่ n8n ส่งมา (ต้องเป็น success ถึงจะไปหน้าสำเร็จ)
-          if (data.status === "success" || data.status === "Success") {
-            window.location.href = "success.html";
-          } else {
-            // ถ้าเป็น error หรือ status อื่นๆ (เช่น ห้องเต็ม) ให้ไปหน้า error
+          // เช็คสถานะ: ถ้า n8n ตอบกลับมา และค่า status ไม่ใช่ 'error' ให้ไปหน้า Success ทันที
+          if (data && data.status === "error") {
             window.location.href = "error.html";
+          } else {
+            // กรณีอื่นๆ เช่น ส่ง success มา หรือส่งอะไรแปลกๆ มาแต่บันทึกสำเร็จแล้ว ให้ถือว่าผ่าน
+            window.location.href = "success.html";
           }
         } else {
-          // ถ้า HTTP Status ไม่ใช่ 200 (เช่น n8n พัง)
+          // ถ้า Server ตอบกลับผิดพลาด (เช่น n8n ล่ม)
           window.location.href = "error.html";
         }
 
       } catch (err) {
-        // ถ้าเชื่อมต่อ n8n ไม่ได้เลย
+        // กรณีต่อเน็ตไม่ได้ หรือ fetch พัง
         window.location.href = "error.html";
       } finally {
         btn.disabled = false;
