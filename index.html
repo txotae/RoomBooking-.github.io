@@ -2,6 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KKUIC Room Booking</title>
 
   <style>
@@ -14,51 +15,11 @@
 
     .container {
       max-width: 500px;
-      margin: 50px auto;
+      margin: 40px auto;
       background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-weight: bold;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    small {
-      color: gray;
-      display: block;
-      margin-top: -10px;
-      margin-bottom: 10px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #2980b9;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1f5f8b;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     }
 
     .logo {
@@ -66,19 +27,67 @@
       margin: 0 auto 15px;
       width: 120px;
     }
+
+    h2 {
+      text-align: center;
+      color: #1e3a8a;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    small {
+      color: gray;
+      display: block;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    button {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
   </style>
 </head>
-
 <body>
 
   <div class="container">
+    <img src="KKUIC Logo - Rainbow + Off white BG.png" alt="KKUIC Logo" class="logo">
 
-    <!-- โลโก้ -->
-    <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
+    <h2>KKUIC Room Booking</h2>
 
-    <h2>Room Booking (KKUIC)</h2>
-
-    <!-- 🔥 FORM ที่เชื่อม n8n -->
     <form action="https://txotae.app.n8n.cloud/webhook-test/BookingRoom" method="POST">
 
       <label>ชื่อผู้จอง</label>
@@ -90,12 +99,12 @@
       <label>สาขา</label>
       <input type="text" name="major" placeholder="CREATIVE MEDIA TECHNOLOGY (or CMT)" required>
 
-      <label>วันที่</label>
+      <label>วันที่ต้องการจอง</label>
       <input type="date" name="date" required>
 
-      <label>ช่วงเวลา</label>
+      <label>ช่วงเวลาที่ต้องการจอง</label>
       <select name="time" required>
-        <option value="">-- เลือกช่วงเวลา --</option>
+        <option value="">-- กรุณาเลือกช่วงเวลา --</option>
         <option value="Morning">Morning</option>
         <option value="Afternoon">Afternoon</option>
       </select>
@@ -105,9 +114,9 @@
         ช่วงบ่าย (13.00-16.00)
       </small>
 
-      <label>ห้อง</label>
+      <label>ห้องที่ต้องการจอง</label>
       <select name="room" required>
-        <option value="">-- เลือกห้อง --</option>
+        <option value="">-- กรุณาเลือกห้อง --</option>
         <option value="Studio (5 floor)">Studio (5 floor)</option>
         <option value="Student Lounge (2 floor)">Student Lounge (2 floor)</option>
         <option value="M301">M301</option>
@@ -115,12 +124,13 @@
       </select>
 
       <label>หมายเหตุ</label>
-      <textarea name="note"></textarea>
+      <textarea name="note" placeholder="กรอกเพิ่มเติม (ถ้ามี)"></textarea>
+
+      <!-- hidden status -->
+      <input type="hidden" name="status" value="Pending">
 
       <button type="submit">Book</button>
-
     </form>
-
   </div>
 
 </body>
