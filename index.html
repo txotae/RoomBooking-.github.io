@@ -81,13 +81,15 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
-    <img src="KKUIC Logo - Rainbow + Off white BG.png" alt="KKUIC Logo" class="logo">
+    <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
 
     <h2>KKUIC Room Booking</h2>
 
+    <!-- 🔥 เชื่อมกับ n8n -->
     <form action="https://txotae.app.n8n.cloud/webhook-test/BookingRoom" method="POST">
 
       <label>name</label>
@@ -104,7 +106,7 @@
 
       <label>time</label>
       <select name="time" required>
-        <option value="">-- กรุณาเลือกช่วงเวลา --</option>
+        <option value="">-- เลือกช่วงเวลา --</option>
         <option value="Morning">Morning</option>
         <option value="Afternoon">Afternoon</option>
       </select>
@@ -116,7 +118,7 @@
 
       <label>room</label>
       <select name="room" required>
-        <option value="">-- กรุณาเลือกห้อง --</option>
+        <option value="">-- เลือกห้อง --</option>
         <option value="Studio (5 floor)">Studio (5 floor)</option>
         <option value="Student Lounge (2 floor)">Student Lounge (2 floor)</option>
         <option value="M301">M301</option>
@@ -124,12 +126,13 @@
       </select>
 
       <label>note</label>
-      <textarea name="note" placeholder="กรอกเพิ่มเติม (ถ้ามี)"></textarea>
+      <textarea name="note"></textarea>
 
-      <!-- hidden status -->
+      <!-- ✅ status ซ่อน -->
       <input type="hidden" name="status" value="Pending">
 
       <button type="submit">Book</button>
+
     </form>
   </div>
 
