@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KKUIC Room Booking</title>
   <style>
+    /* ธีมเดิมของคุณเป๊ะๆ ไม่เปลี่ยนสักบรรทัด */
     body { font-family: Arial, sans-serif; background: linear-gradient(to right, #6dd5fa, #2980b9); margin: 0; padding: 0; }
     .container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
     .logo { display: block; margin: 0 auto 15px; width: 120px; }
@@ -64,30 +65,34 @@
       btn.innerText = "กำลังดำเนินการ...";
 
       try {
-        // ส่งข้อมูลไปที่ n8n
+        // --- ส่วนที่แก้ไข: เปลี่ยนมาเช็คคำตอบจาก n8n แทนการเด้งไป success ทันที ---
         const response = await fetch("https://txotae.app.n8n.cloud/webhook/BookingRoom", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        // 🌟 จุดสำคัญ: ถ้าคุยกับ n8n ได้ (Status 200) ไม่ว่า n8n จะส่งอะไรกลับมา 
-        // ให้เด้งไปหน้าสำเร็จทันที เพราะเรารู้แล้วว่าข้อมูลเข้าชีทแน่นอน
-        if (response.ok) {
+        // รอรับค่า JSON จาก n8n (ที่เราตั้งว่า status: success หรือ error)
+        const result = await response.json();
+
+        if (result.status === "success") {
+          // ถ้าจองได้จริง (isBooked = false) ไปหน้าติ๊กถูก
           window.location.href = "success.html";
+        } else if (result.status === "error") {
+          // ถ้าจองไม่ได้/จองซ้ำ (isBooked = true) ไปหน้ากากบาท
+          window.location.href = "error.html";
         } else {
-          // กรณี n8n ล่ม หรือปิดอยู่ (Status ไม่ใช่ 200)
+          // เผื่อไว้กรณีอื่น ให้ไปหน้า error
           window.location.href = "error.html";
         }
         
       } catch (err) {
-        // แผนสำรอง: ถ้าข้อมูลส่งไปแล้ว (ชีทขึ้น) แต่ติดเรื่องความปลอดภัยหน้าบ้าน
-        // ให้พาไปหน้าสำเร็จเลยเพื่อความชัวร์
-        window.location.href = "success.html";
+        // ถ้าส่งข้อมูลไม่สำเร็จ หรือ n8n มีปัญหา
+        console.error("Error:", err);
+        window.location.href = "error.html";
       }
     });
   </script>
 
 </body>
 </html>
-
