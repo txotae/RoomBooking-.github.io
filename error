@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Failed</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #6dd5fa, #2980b9);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 15px;
+      width: 120px;
+    }
+
+    h2 {
+      color: #1e3a8a;
+      margin-bottom: 20px;
+    }
+
+    .icon {
+      font-size: 80px;
+      color: red;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #333;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <img src="KKUIC Logo - Rainbow + Off white BG.png" class="logo">
+
+    <div class="icon">❌</div>
+
+    <h2>จองไม่สำเร็จ</h2>
+
+    <p>ช่วงเวลานี้มีคนจองแล้ว หรือเกิดข้อผิดพลาด</p>
+
+    <button onclick="window.location.href='index.html'">
+      กลับไปจองใหม่
+    </button>
+  </div>
+
+</body>
+</html>
